@@ -10,5 +10,5 @@ export default function ProtectedRoute({ children }) {
     if (!isAuthenticated) navigate("/");
   }, [isAuthenticated, navigate]);
 
-  return children;
+  return isAuthenticated? children:null;
 }
