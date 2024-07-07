@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { memo } from "react";
 
 import { useCities } from "../contexts/CityContext";
 import styles from "./CityItem.module.css";
 import { Link } from "react-router-dom";
 
-function CityItem({ city }) {
+const CityItem = memo(function CityItem({ city }) {
   const { formatDate, currentCity, removeCity } = useCities();
   const { cityName, emoji, date, id, position } = city;
 
@@ -34,6 +34,6 @@ function CityItem({ city }) {
       </Link>
     </li>
   );
-}
+});
 
 export default CityItem;

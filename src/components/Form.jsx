@@ -24,6 +24,7 @@ function Form() {
   const [mapLat, mapLng] = useUrlPosition();
   const [cityIsLoading, setCityisLoading] = useState(false);
   const { addCity, idRef } = useCities();
+  
   useEffect(() => {
     async function fetchData() {
       try {
