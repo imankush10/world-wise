@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useReducer,
@@ -15,6 +16,7 @@ const initialState = {
     : cityData.cities,
   currentCity: null,
 };
+
 function reducer(state, action) {
   switch (action.type) {
     case "city/loaded":
@@ -42,30 +44,36 @@ function CityProvider({ children }) {
 
   const idRef = useRef(0);
 
-  function getCity(id) {
+  const getCity = useRef((id) => {
     const currentCityVar = cities.find((city) => city.id == id);
     dispatch({ type: "city/loaded", payload: currentCityVar });
-  }
+  }).current;
 
-  function addCity(city) {
+  const addCity = useCallback((city) => {
     dispatch({ type: "city/created", payload: city });
-  }
+  }, []);
 
-  function removeCity(city) {
-    const newCities = cities.filter((cty) => cty.id !== city.id);
-    dispatch({ type: "city/deleted", payload: newCities });
-  }
+  const removeCity = useCallback(
+    (city) => {
+      const newCities = cities.filter((cty) => cty.id !== city.id);
+      dispatch({ type: "city/deleted", payload: newCities });
+    },
+    [cities]
+  );
 
   useEffect(() => {
     localStorage.setItem("cities", JSON.stringify(cities));
   }, [cities]);
 
-  const formatDate = (date) =>
-    new Intl.DateTimeFormat("en", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    }).format(new Date(date));
+  const formatDate = useCallback(
+    (date) =>
+      new Intl.DateTimeFormat("en", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }).format(new Date(date)),
+    []
+  );
 
   return (
     <CityContext.Provider

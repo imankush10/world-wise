@@ -11,7 +11,7 @@ function City() {
   const { formatDate, getCity, currentCity } = useCities();
 
   const { id } = useParams();
-  useEffect(() => getCity(id), [id]);
+  useEffect(() => getCity(id), [id, getCity]);
 
   if (!currentCity) return <Spinner />;
 
