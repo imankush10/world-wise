@@ -1,7 +1,7 @@
-import { React, memo } from "react";
+import { React } from "react";
 import styles from "./CountryItem.module.css";
 
-const CountryItem = memo(function CountryItem({ country }) {
+function CountryItem({ country }) {
   return (
     <li className={styles.countryItem}>
       <span>
@@ -12,6 +12,6 @@ const CountryItem = memo(function CountryItem({ country }) {
       <span>{country.country}</span>
     </li>
   );
-});
+}
 
 export default CountryItem;
